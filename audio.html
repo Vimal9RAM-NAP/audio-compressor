@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AUDISSOR - Audio Compressor</title>
+  <link rel="stylesheet" href="layout.css" />
+  <script src="https://cdn.jsdelivr.net/npm/lamejs@1.2.1/lame.min.js"></script>
+</head>
+<body>
+  <div class="app-container">
+    <header class="header">
+      <div class="logo-box">
+        <span class="brand-name">AUDISSOR</span>
+      </div>
+      <div class="version-tag">v1.0.0</div>
+    </header>
+
+    <main class="main-grid">
+      
+      <section class="card drop-zone" id="dropZone">
+        <input type="file" id="fileInput" accept="audio/*" hidden />
+        <div class="drop-content" id="dropContent">
+          <svg class="upload-icon" width="44" height="44" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 .895-2 3-2 3 .895 3 2zm12 0c0 1.105-1.343 2-3 2s-3-.895-3-2 .895-2 3-2 3 .895 3 2zM9 10l12-3"/>
+          </svg>
+          <p>Drag & Drop your audio file here or <span class="browse-btn">Browse</span></p>
+          <small>Supports MP3, WAV, OGG, AAC, FLAC</small>
+        </div>
+        <div class="track-info" id="trackInfo" hidden>
+          <span class="track-name" id="trackName">filename.mp3</span>
+          <span class="track-meta" id="trackMeta">Original Duration: --:--</span>
+        </div>
+      </section>
+
+      
+      <section class="right-top-group">
+        <div class="card preview-card">
+          <h2>Audio Preview Stage</h2>
+          <div class="preview-stage">
+            <p class="placeholder-text" id="placeholderText">Upload an audio file to view waveform & play</p>
+            <div id="playerWrapper" class="player-wrapper" hidden>
+              <canvas id="waveformCanvas" width="500" height="80"></canvas>
+              <audio id="audioPreview" controls></audio>
+            </div>
+          </div>
+        </div>
+
+        <div class="card details-card">
+          <div class="detail-box">
+            <span class="label">Original Size</span>
+            <span class="value" id="origSize">0 KB</span>
+          </div>
+          <div class="detail-box">
+            <span class="label">Compressed Size</span>
+            <span class="value" id="compSize">0 KB</span>
+          </div>
+          <div class="detail-box highlight">
+            <span class="label">Saved</span>
+            <span class="value" id="savedRatio">0%</span>
+          </div>
+        </div>
+      </section>
+
+      
+      <section class="card controls-card">
+        <h2>Audio Compression Controls</h2>
+        
+        <div class="controls-grid">
+          <div class="control-group">
+            <label for="bitrateSelect">Target Bitrate:</label>
+            <select id="bitrateSelect">
+              <option value="64">64 kbps (Low / Speech)</option>
+              <option value="96">96 kbps (Podcast Quality)</option>
+              <option value="128" selected>128 kbps (Standard Music)</option>
+              <option value="192">192 kbps (High Quality)</option>
+              <option value="320">320 kbps (Maximum Bitrate)</option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <label for="channelSelect">Audio Channels:</label>
+            <select id="channelSelect">
+              <option value="1">Mono (Saves ~50% extra size)</option>
+              <option value="2" selected>Stereo (2 Channels)</option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <label for="sampleRateSelect">Sample Rate:</label>
+            <select id="sampleRateSelect">
+              <option value="22050">22.05 kHz</option>
+              <option value="44100" selected>44.1 kHz (CD Standard)</option>
+              <option value="48000">48.0 kHz</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      
+      <section class="card export-card">
+        <h2>Export Pipeline</h2>
+        <div class="export-actions">
+          <button class="btn primary" id="compressBtn" disabled>Compress Audio</button>
+          <button class="btn secondary" id="downloadAudioBtn" disabled>Download Compressed MP3</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="audio-app.js"></script>
+</body>
+</html>
